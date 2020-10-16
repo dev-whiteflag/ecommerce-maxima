@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Data
-public class UserDto implements Serializable {
+public class ClientDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull

@@ -11,12 +11,12 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
- * Entity that describes data of a user. This uses Lombok.
+ * Entity that describes data of a Client. This uses Lombok.
  * @author Brenno Fagundes
  */
 @Data
 @Entity
-public class User implements Serializable {
+public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
