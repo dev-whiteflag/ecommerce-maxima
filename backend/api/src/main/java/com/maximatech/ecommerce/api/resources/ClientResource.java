@@ -18,7 +18,7 @@ import java.util.UUID;
  * @author Brenno Fagundes
  */
 @RestController
-@RequestMapping(value = "/v1", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/v1/clients", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class ClientResource {
 
     private final ClientService service;
@@ -30,7 +30,7 @@ public class ClientResource {
         this.maxService = maxService;
     }
 
-    @GetMapping("/clients/sync")
+    @GetMapping("/sync")
     public void syncWithMaxima() {
         /* ENHANCE: this will be called by frontend everytime 'Clients' screen is
         *           opened, this is not the smartest way to sync them but will work for now.

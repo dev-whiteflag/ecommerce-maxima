@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+    maxima-database:
+        image: postgres
+        environment: 
+            - POSTGRES_USER=MaximaDatabase
+            - POSTGRES_PASSWORD=1RSMa27EaFDj
+            - POSTGRES_DB=mecommerce
+        volumes:
+            - db-data:/var/lib/postgresql/data/
+        networks: 
+            maxima-network:
+                aliases: 
+                    - data.maximatech.com.br
     maxima-config:
         image: maxima-config
         build: ./backend/config/
@@ -33,10 +45,27 @@ services:
                     - gateway.maximatech.com.br    
         expose:
             - "8080"
-            
+    maxima-api:
+        image: maxima-api
+        build: ./backend/api
+        depends_on: 
+            - "maxima-config"
+            - "maxima-discovery"
+            - "maxima-gateway"
+            - "maxima-database"
+        networks: 
+            maxima-network:
+                aliases: 
+                    - api.maximatech.com.br   
+        expose:
+            - "8081"
+
 networks:
     maxima-network:
         driver: bridge
         ipam:
             config:
                 - subnet: 172.1.0.0/16
+
+volumes:
+    db-data:
