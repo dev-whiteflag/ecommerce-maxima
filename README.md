@@ -3,6 +3,11 @@
 
 > PoC (Prova de Conceito) de um e-commerce, basicamente o sistema consiste na criação de Pedidos (cliente + produtos + frete).
 
+## Backend
+
+Create a Networking using: `docker network create maxima-network`.
+
+
 ## Metadata
 
 Brenno Fagundes - dev.whiteflag@gmail.com

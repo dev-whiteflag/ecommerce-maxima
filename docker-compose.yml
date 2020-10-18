@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+    maxima-config:
+        image: maxima-config
+        build: ./backend/config/
+        networks: 
+            maxima-network:
+                aliases: 
+                    - config.maximatech.com.br
+        expose: 
+            - "8091"
+    maxima-discovery:
+        image: maxima-discovery
+        build: ./backend/discovery
+        depends_on:
+            - "maxima-config"
+        networks: 
+            maxima-network:
+                aliases: 
+                    - discovery.maximatech.com.br
+        expose: 
+            - "8092"
+
+networks:
+    maxima-network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.1.0.0/16

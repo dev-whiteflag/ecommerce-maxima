@@ -28,6 +28,6 @@ RUN mv discovery**.jar app.jar
 # Wrapping it all up
 EXPOSE 8092/tcp
 USER root
-RUN chown MaximaBot app.jar && ls -la
+RUN chown MaximaBot app.jar
 USER MaximaBot
 ENTRYPOINT ["java", "-jar", "app.jar"]
