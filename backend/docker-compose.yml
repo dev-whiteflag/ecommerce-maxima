@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+    maxima-config:
+        image: maxima-config:1.0
+        build: ./config
+        ports:
+            - 8091
+            - 8091:8091 
