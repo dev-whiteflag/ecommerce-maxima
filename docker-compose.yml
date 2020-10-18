@@ -13,6 +13,18 @@ services:
             maxima-network:
                 aliases: 
                     - data.maximatech.com.br
+    maxima-redis:
+        image: redis
+        environment:
+            - REDIS_REPLICATION_MODE=master
+        volumes:
+            - redis-data:/var/lib/redis
+        networks: 
+            maxima-network:
+                aliases: 
+                    - redis.maximatech.com.br
+        ports:
+            - "6379"
     maxima-config:
         image: maxima-config
         build: ./backend/config/
@@ -26,6 +38,7 @@ services:
         image: maxima-discovery
         build: ./backend/discovery
         depends_on:
+            - "maxima-redis"
             - "maxima-config"
         networks: 
             maxima-network:
@@ -39,6 +52,7 @@ services:
         depends_on:
             - "maxima-config"
             - "maxima-discovery"
+            - "maxima-redis"
         networks: 
             maxima-network:
                 aliases: 
@@ -69,3 +83,4 @@ networks:
 
 volumes:
     db-data:
+    redis-data:
