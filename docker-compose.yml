@@ -21,7 +21,19 @@ services:
                     - discovery.maximatech.com.br
         expose: 
             - "8092"
-
+    maxima-gateway:
+        image: maxima-gateway
+        build: ./backend/gateway
+        depends_on:
+            - "maxima-config"
+            - "maxima-discovery"
+        networks: 
+            maxima-network:
+                aliases: 
+                    - gateway.maximatech.com.br    
+        expose:
+            - "8080"
+            
 networks:
     maxima-network:
         driver: bridge

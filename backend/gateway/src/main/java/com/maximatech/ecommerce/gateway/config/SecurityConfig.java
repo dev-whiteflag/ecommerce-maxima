@@ -13,10 +13,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // TODO: the passwords are being sent as plain text, this is bad! fix this.
         auth.inMemoryAuthentication()
-                .withUser("user").password("user").roles("USER")
-                .and().withUser("admin").password("admin").roles("ADMIN");
+                .withUser("user").password("{noop}user").roles("USER")
+                .and().withUser("admin").password("{noop}admin").roles("ADMIN");
     }
 
     @Override
