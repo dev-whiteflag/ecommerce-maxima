@@ -2,7 +2,6 @@ package com.maximatech.ecommerce.api.services;
 
 import com.maximatech.ecommerce.api.models.dto.ClientMaxima;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -12,8 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Maxima Service is a service for communicating with
- * maxima's products and clients endpoints.
+ * Maxima Service is a service for communicating with maxima's products and
+ * clients endpoints.
  * @author Brenno Fagundes
  */
 @Component
