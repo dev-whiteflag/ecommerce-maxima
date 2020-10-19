@@ -2,10 +2,14 @@ package com.maximatech.ecommerce.api.resources;
 
 import com.google.common.base.Preconditions;
 import com.maximatech.ecommerce.api.mappers.ClientMapper;
+import com.maximatech.ecommerce.api.mappers.ProductMapper;
 import com.maximatech.ecommerce.api.models.dto.ClientDto;
+import com.maximatech.ecommerce.api.models.dto.ProductDto;
 import com.maximatech.ecommerce.api.models.entities.Client;
+import com.maximatech.ecommerce.api.models.entities.Product;
 import com.maximatech.ecommerce.api.services.ClientService;
 import com.maximatech.ecommerce.api.services.MaximaService;
+import com.maximatech.ecommerce.api.services.ProductService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,19 +24,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Rest Controller (resource) for Clients, this controller includes Paginated Endpoints.
+ * Rest Controller (resource) for Products, this controller includes Paginated Endpoints.
  * @author Brenno Fagundes
  */
 @RestController
-@RequestMapping(value = "/v1/clients", produces = { MediaType.APPLICATION_JSON_VALUE })
-public class ClientResource {
+@RequestMapping(value = "/v1/products", produces = { MediaType.APPLICATION_JSON_VALUE })
+public class ProductResource {
 
-    private final ClientService service;
+    private final ProductService service;
     private final MaximaService maxService;
-    private final ClientMapper mapper = Mappers.getMapper(ClientMapper.class);
+    private final ProductMapper mapper = Mappers.getMapper(ProductMapper.class);
 
     @Autowired
-    public ClientResource(ClientService service, MaximaService maxService) {
+    public ProductResource(ProductService service, MaximaService maxService) {
         this.service = service;
         this.maxService = maxService;
     }
@@ -45,44 +49,44 @@ public class ClientResource {
         *           nicely.
         */
 
-        maxService.getAllClientsFromApi().parallelStream()
-                .forEach(client -> service.save(mapper.toEntity(client)));
+        maxService.getAllProductsFromApi().parallelStream()
+                .forEach(product -> service.save(mapper.toEntity(product)));
     }
 
     @GetMapping("/{uuid}")
-    public ClientDto findById(@PathVariable UUID uuid) {
-        Optional<Client> optional = service.findById(uuid);
+    public ProductDto findById(@PathVariable UUID uuid) {
+        Optional<Product> optional = service.findById(uuid);
         if(optional.isPresent())
             return mapper.toDto(optional.get());
-        throw new EntityNotFoundException("Requested Client was not Found");
+        throw new EntityNotFoundException("Requested Product was not Found");
     }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<ClientDto> getAllUsers(@RequestBody Pageable body) {
+    public List<ProductDto> getAllProducts(@RequestBody Pageable body) {
         Preconditions.checkNotNull(body);
-        List<ClientDto> clientDtos = new ArrayList<>();
+        List<ProductDto> productDtos = new ArrayList<>();
         service.getAllPaginated(body).parallelStream()
-                .forEach(client -> clientDtos.add(mapper.toDto(client)));
-        return clientDtos;
+                .forEach(product -> productDtos.add(mapper.toDto(product)));
+        return productDtos;
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID createUser(@RequestBody ClientDto user){
-        Preconditions.checkNotNull(user);
-        return service.save(mapper.toEntity(user));
+    public UUID createProduct(@RequestBody ProductDto product){
+        Preconditions.checkNotNull(product);
+        return service.save(mapper.toEntity(product));
     }
 
     @PutMapping(value = "/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable UUID uuid, @RequestBody ClientDto resource) {
+    public void update(@PathVariable UUID uuid, @RequestBody ProductDto resource) {
         Preconditions.checkNotNull(resource);
-        Optional<Client> optional = service.findById(uuid);
+        Optional<Product> optional = service.findById(uuid);
         if(optional.isPresent()){
             service.update(optional.get());
         } else {
-            throw new EntityNotFoundException("Requested Client was not Found");
+            throw new EntityNotFoundException("Requested Product was not Found");
         }
     }
 
@@ -90,11 +94,11 @@ public class ClientResource {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable UUID uuid) {
         Preconditions.checkNotNull(uuid);
-        Optional<Client> optional = service.findById(uuid);
+        Optional<Product> optional = service.findById(uuid);
         if(optional.isPresent()){
             service.delete(optional.get());
         } else {
-            throw new EntityNotFoundException("Requested Client was not Found");
+            throw new EntityNotFoundException("Requested Product was not Found");
         }
     }
 }
