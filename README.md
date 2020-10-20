@@ -3,10 +3,23 @@
 
 > PoC (Prova de Conceito) de um e-commerce, basicamente o sistema consiste na criação de Pedidos (cliente + produtos + frete).
 
+## Frontend
+
 ## Backend
 
-Create a Networking using: `docker network create maxima-network`.
+O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``.
 
+### ``config``
+
+É um modulo que utiliza Spring para criar um Configuration Server, onde outros serviços irão retirar informações de configuração.
+
+- Todos os serviços tem Spring Retry configurado ao comunicar com esse serviço, para que possamos usar-lo em uma network de docker. Em produção, _provavelmente_ não será necessário.
+- "Repo" é uma pasta que simula um reposiório em nuvem que o ``config`` usa para procurar pelas informações.
+- No Dockerfile, é criado um repositório local para simular o citado acima.
+
+### Load Balancer
+
+Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com ``gateway`` (utilizando Zuul) agem como um load balancer, o ``discovery`` registra as novas instancias do serviço e o ``gateway`` redireciona para as instancias de acorco com a analise do Zuul.
 
 ## Metadata
 

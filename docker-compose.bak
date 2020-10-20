@@ -74,7 +74,7 @@ services:
                     - api.maximatech.com.br   
         expose:
             - "8081"
-    maxima-api:
+    maxima-tax:
         image: maxima-tax
         build: ./backend/tax
         depends_on: 
