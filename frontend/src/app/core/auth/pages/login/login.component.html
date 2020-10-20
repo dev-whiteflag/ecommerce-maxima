@@ -1,8 +1,27 @@
-<h1>lol hello you're logged in</h1>
+<section fxLayout="row">
+  <img class="maxima-bg"
+       src="https://maximatech.com.br/wp-content/uploads/2019/04/forca-de-vendas-maior.png"
+       alt="Empresário feliz com uma força de Tarefa maior em sua Empresa">
+  <div class="maxima-login" fxLayout="column" fxLayoutAlign="center center">
+    <img src="./assets/icons/logotipo-maximatech.png" alt="Maxima Logo">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Logue-se para Continuar</mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuário</mat-label>
+          <input matInput placeholder="John Doe" [formControl]="username" required>
+          <mat-error *ngIf="username.invalid">{{getErrorMessage("username")}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput placeholder="Senha" [formControl]="password" required>
+          <mat-error *ngIf="password.invalid">{{getErrorMessage("password")}}</mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="accent" (click)="login()">Logar</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
 
-<div *ngIf="profile">
-  {{profile.sub}}
-  {{profile.nickname}}
-  {{profile.name}}
-  {{profile.email}}
-</div>

@@ -1,11 +1,29 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center">
-  <mat-icon svgIcon="vision" aria-hidden="false" aria-label="Vision logo"></mat-icon>
-  <div fxLayout="row" fxLayoutAlign="space-evenly center">
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
+<mat-toolbar *ngIf="isAuthenticated" fxLayout="row" fxLayoutAlign="start center">
+  <img class="maxima-logo" src="./assets/icons/logotipo-maximatech.png" alt="Maxima Logo">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-flat-button [matMenuTriggerFor]="registerMenu" aria-label="Botão de Cadastro">
+      Cadastro
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
+    <mat-menu #registerMenu="matMenu">
+      <button mat-menu-item>
+        <span>Cliente</span>
+      </button>
+      <button mat-menu-item>
+        <span>Produto</span>
+      </button>
+    </mat-menu>
+    <button mat-flat-button [matMenuTriggerFor]="ordersMenu" aria-label="Botão de Pedidos">
+      Pedido
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
+    <mat-menu #ordersMenu="matMenu">
+      <button mat-menu-item>
+        <span>Novo Pedido</span>
+      </button>
+      <button mat-menu-item>
+        <span>Consulta Pedido</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
+import {AuthService} from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +7,10 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent {
-  constructor() {
+  isAuthenticated: boolean;
+  constructor(private auth: AuthService) {
+    this.auth.checkAuthenticated().then(value => {
+      this.isAuthenticated = value;
+    });
   }
 }

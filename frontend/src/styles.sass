@@ -1,5 +1,63 @@
 @import '~@angular/material/_theming.scss'
-@include mat-core()
+@import '~normalize.css'
+
+// MaximaTech Font Definition
+@font-face
+  font-family: 'Euclid Circular B'
+  src: url("assets/fonts/EuclidCircularB-Regular.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-style: italic
+  src: url("assets/fonts/EuclidCircularB-RegularItalic.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: bold
+  src: url("assets/fonts/EuclidCircularB-Bold.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: bold
+  font-style: italic
+  src: url("assets/fonts/EuclidCircularB-BoldItalic.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 300
+  src: url("assets/fonts/EuclidCircularB-Light.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 300
+  font-style: italic
+  src: url("assets/fonts/EuclidCircularB-LightItalic.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 500
+  src: url("assets/fonts/EuclidCircularB-Medium.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 500
+  font-style: italic
+  src: url("assets/fonts/EuclidCircularB-MediumItalic.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 600
+  src: url("assets/fonts/EuclidCircularB-Semibold.otf") format("opentype")
+
+@font-face
+  font-family: 'Euclid Circular B'
+  font-weight: 600
+  font-style: italic
+  src: url("assets/fonts/EuclidCircularB-SemiboldItalic.otf") format("opentype")
+
+$maxima-typography: mat-typography-config($font-family: 'Euclid Circular B')
+
+@include mat-core($maxima-typography)
 
 // Light Theme
 $ecommerce-app-primary: mat-palette($mat-blue)

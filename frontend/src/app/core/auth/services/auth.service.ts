@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-
-import { AuthService as Auth0Service } from '@auth0/auth0-angular';
-import {Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class AuthService {
-  constructor(public auth: Auth0Service) {}
+  constructor() {}
 
-  public login(): void {
-    this.auth.loginWithRedirect();
+  public isAuthenticated = new BehaviorSubject<boolean>(false);
+
+  async checkAuthenticated(): Promise<boolean> {
+    const authenticated = Boolean(await localStorage.getItem('isAuthenticated'));
+    return authenticated === true;
   }
 
-  public isAuthenticated(): Observable<boolean> {
-    return this.auth.isAuthenticated$;
-  }
-
-  public returnUserData(): Observable<any> {
-    return this.auth.user$;
+  login(username: string, password: string): void {
+    // Mockup of a Authentication Service Request
+    const validation = !(username !== 'user' || password !== 'user');
+    if (validation !== true) {
+      throw Error('Invalid Credentials');
+    }
+    this.isAuthenticated.next(true);
+    localStorage.setItem('isAuthenticated', 'true');
   }
 }
