@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/_theming.scss'
+@include mat-core()
+
+// Light Theme
+$ecommerce-app-primary: mat-palette($mat-blue)
+$ecommerce-app-accent: mat-palette($mat-purple, A200, A100, A400)
+$ecommerce-app-light-theme: mat-light-theme($ecommerce-app-primary, $ecommerce-app-accent)
+
+@include angular-material-theme($ecommerce-app-light-theme)

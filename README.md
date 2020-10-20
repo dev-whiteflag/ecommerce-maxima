@@ -3,11 +3,15 @@
 
 > PoC (Prova de Conceito) de um e-commerce, basicamente o sistema consiste na criação de Pedidos (cliente + produtos + frete).
 
+## Introdução
+
+
+
 ## Frontend
 
 ## Backend
 
-O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``.
+O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``. Os serviços utilizando Spring Boot ``2.3.4.RELEASE`` e Spring Cloud ``Hoxton.SR8``, rodando em OpenJDK 14 com source escrita em Java 11.
 
 ### ``config``
 
@@ -19,7 +23,7 @@ O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, 
 
 ### Load Balancer
 
-Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com ``gateway`` (utilizando Zuul) agem como um load balancer, o ``discovery`` registra as novas instancias do serviço e o ``gateway`` redireciona para as instancias de acorco com a analise do Zuul.
+Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com ``gateway`` (utilizando Zuul) agem como um load balancer, o ``discovery`` registra as novas instancias do serviço e o ``gateway`` redireciona para as instancias de acordco com o Zuul.
 
 ## Metadata
 

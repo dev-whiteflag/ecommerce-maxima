@@ -1,13 +1,76 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Frontend</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atsuki Vision</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta property="og:title" content="Atsuki Vision">
+  <meta property="og:description" content="Atsuki's Services and Teams Management Application for Internal Usage.">
+  <meta property="og:url" content="vision.atsuki.dev">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style type="text/css">
+    body, html {
+      height: 100%;
+    }
+    .app-loading {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .loading-icon {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .loading-icon div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border: 8px solid #ff4081;
+      border-radius: 50%;
+      animation: loading-icon 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #ff4081 transparent transparent transparent;
+    }
+    .loading-icon div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    .loading-icon div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    .loading-icon div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+    @keyframes loading-icon {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
 </head>
-<body>
-  <app-root></app-root>
+
+<body class="mat-typography">
+  <app-root>
+    <div class="app-loading">
+      <div class="loading-icon"><div></div><div></div><div></div><div></div></div>
+    </div>
+  </app-root>
 </body>
+
 </html>
