@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 /**
- * Paging and Sorting Capable Repository for Clients.
+ * Paging and Sorting Capable Repository for Products.
  * @author Brenno Fagundes
  */
 @Repository

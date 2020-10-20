@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Client Service for Clients, this service is responsible for business logic
+ * Product Service for Product, this service is responsible for business logic
  * before returning the object to controller.
  * @author Brenno Fagundes
  */

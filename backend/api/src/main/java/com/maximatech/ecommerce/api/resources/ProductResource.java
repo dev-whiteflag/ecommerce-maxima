@@ -42,6 +42,7 @@ public class ProductResource {
     }
 
     @GetMapping("/sync")
+    @ResponseStatus(HttpStatus.OK)
     public void syncWithMaxima() {
         /* ENHANCE: this will be called by frontend everytime 'Clients' screen is
         *           opened, this is not the smartest way to sync them but will work for now.
