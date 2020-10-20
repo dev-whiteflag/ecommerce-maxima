@@ -16,10 +16,11 @@ public class ProductDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    private String code;
-    @NotNull
-    private String name;
-    @NotNull
-    private Double unitPrice;
-    private String imageUrl;
+    private Integer quantity;
+
+    public ProductDto() {}
+
+    public ProductDto(@NotNull Integer quantity) {
+        this.quantity = quantity;
+    }
 }
