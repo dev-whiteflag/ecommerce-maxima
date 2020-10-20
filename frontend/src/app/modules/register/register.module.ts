@@ -9,5 +9,5 @@ import {CommonModule} from '@angular/common';
   providers: [],
   bootstrap: []
 })
-export class AccessModule {
+export class RegisterModule {
 }

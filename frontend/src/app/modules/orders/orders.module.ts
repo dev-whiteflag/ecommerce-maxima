@@ -9,5 +9,5 @@ import {CommonModule} from '@angular/common';
   providers: [],
   bootstrap: []
 })
-export class ProjectsModule {
+export class OrdersModule {
 }

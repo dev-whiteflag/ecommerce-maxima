@@ -8,13 +8,6 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./navbar.component.sass']
 })
 export class NavbarComponent {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-
-    // Adds Vision Branding as a Icon.
-    iconRegistry.addSvgIcon(
-      'vision',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/branding/vision-logo.svg')
-    );
-
+  constructor() {
   }
 }
