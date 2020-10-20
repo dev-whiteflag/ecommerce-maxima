@@ -16,11 +16,11 @@ RUN mkdir deployment
 WORKDIR /home/MaximaBot/deployment
 
 # Copying server jar
-COPY target/api**.jar /home/MaximaBot/deployment/
-RUN mv api**.jar app.jar
+COPY target/tax**.jar /home/MaximaBot/deployment/
+RUN mv tax**.jar app.jar
 
 # Wrapping it all up
-EXPOSE 8081/tcp
+EXPOSE 8082/tcp
 USER root
 RUN chown MaximaBot app.jar
 USER MaximaBot
