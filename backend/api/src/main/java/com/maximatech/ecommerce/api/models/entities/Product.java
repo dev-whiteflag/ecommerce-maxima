@@ -28,4 +28,15 @@ public class Product implements Serializable {
     private String imageUrl;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+
+    public Product() {}
+
+    public Product(String code, String name, Double unitPrice, String imageUrl) {
+        this.code = code;
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.imageUrl = imageUrl;
+        this.createdAt = ZonedDateTime.now();
+        this.updatedAt = createdAt;
+    }
 }

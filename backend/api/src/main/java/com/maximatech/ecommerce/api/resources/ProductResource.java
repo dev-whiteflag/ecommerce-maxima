@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +77,10 @@ public class ProductResource {
     @ResponseStatus(HttpStatus.CREATED)
     public UUID createProduct(@RequestBody ProductDto product){
         Preconditions.checkNotNull(product);
-        return service.save(mapper.toEntity(product));
+        Product entity = mapper.toEntity(product);
+        entity.setCreatedAt(ZonedDateTime.now());
+        entity.setUpdatedAt(ZonedDateTime.now());
+        return service.save(entity);
     }
 
     @PutMapping(value = "/{uuid}")
@@ -85,7 +89,9 @@ public class ProductResource {
         Preconditions.checkNotNull(resource);
         Optional<Product> optional = service.findById(uuid);
         if(optional.isPresent()){
-            service.update(optional.get());
+            Product product = optional.get();
+            product.setUpdatedAt(ZonedDateTime.now());
+            service.update(product);
         } else {
             throw new EntityNotFoundException("Requested Product was not Found");
         }

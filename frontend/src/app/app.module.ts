@@ -10,6 +10,7 @@ import {CoreModule} from './core/core.module';
 import {SkeletonModule} from './core/skeleton/skeleton.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {RegisterModule} from './modules/register/register.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     FlexLayoutModule,
     AppRoutingModule,
     CoreModule,
-    SkeletonModule
+    SkeletonModule,
+    RegisterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

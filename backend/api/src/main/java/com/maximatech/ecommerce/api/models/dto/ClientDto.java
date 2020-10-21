@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * Client Dto for returning data from Entity.
@@ -14,9 +14,8 @@ import java.time.ZonedDateTime;
 public class ClientDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private UUID uuid;
     @NotNull
     private String name;
     private String code;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
 }

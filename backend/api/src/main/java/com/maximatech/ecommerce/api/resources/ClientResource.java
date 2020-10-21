@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +81,9 @@ public class ClientResource {
         Preconditions.checkNotNull(resource);
         Optional<Client> optional = service.findById(uuid);
         if(optional.isPresent()){
-            service.update(optional.get());
+            Client client = optional.get();
+            client.setUpdatedAt(ZonedDateTime.now());
+            service.update(client);
         } else {
             throw new EntityNotFoundException("Requested Client was not Found");
         }

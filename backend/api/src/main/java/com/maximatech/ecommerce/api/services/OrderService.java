@@ -1,7 +1,8 @@
 package com.maximatech.ecommerce.api.services;
 
 import com.maximatech.ecommerce.api.models.entities.Client;
-import com.maximatech.ecommerce.api.repositories.ClientRepository;
+import com.maximatech.ecommerce.api.models.entities.Order;
+import com.maximatech.ecommerce.api.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -11,37 +12,37 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Client Service for Clients, this service is responsible for business logic
+ * Order Service for Orders, this service is responsible for business logic
  * before returning the object to controller.
  * @author Brenno Fagundes
  */
 @Component
-public class ClientService {
-    private final ClientRepository repository;
+public class OrderService {
+    private final OrderRepository repository;
 
     @Autowired
-    public ClientService(ClientRepository repository) {
+    public OrderService(OrderRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<Client> findById(UUID uuid) {
+    public Optional<Order> findById(UUID uuid) {
         return repository.findById(uuid);
     }
 
-    public List<Client> getAllPaginated(Pageable pageable) {
+    public List<Order> getAllPaginated(Pageable pageable) {
         return repository.findAll(pageable).toList();
     }
 
-    public void update(Client data){
+    public void update(Order data){
         repository.save(data);
     }
 
-    public UUID save(Client data) {
-        Client client = repository.save(data);
-        return client.getUuid();
+    public UUID save(Order data) {
+        Order order = repository.save(data);
+        return order.getUuid();
     }
 
-    public void delete(Client data) {
+    public void delete(Order data) {
         repository.delete(data);
     }
 }

@@ -15,6 +15,7 @@ import java.util.UUID;
 public class ProductDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private UUID uuid;
     @NotNull
     private String code;
     @NotNull
