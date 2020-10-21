@@ -5,15 +5,13 @@
 
 ## Introdução
 
-993044260
-
 ### Autenticação
 
 A autenticação foi "mocada" em ambas as partes do sistema, as unicas que permaneceram foram entre os serviços de backend. Por exemplo, comunicação entre o `config` e o `discovery`. 
 
 ## Frontend
 
-As credenciais para acessar o frontend é `user` e `user`.
+O Frontend é feito em Angular `10`, utilizando Material Angular. O App comunica com o backend através do Gateway. As credenciais para acessar o frontend é `user` e `user`.
 
 ## Backend
 
@@ -37,10 +35,14 @@ Cada um dos módulos do backend devem ser construidos individualmente utilizando
 
 Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com ``gateway`` (utilizando Zuul) agem como um load balancer, o ``discovery`` registra as novas instancias do serviço e o ``gateway`` redireciona para as instancias de acordco com o Zuul.
 
+### API Gateway
+
+O `gateway` tem uma misconfiguration que causa a primeira requisição do sistema cair em `gateway timeout`.
+
 ### Avisos
 
 É possivel que um dos serviços que necessitam do `config` iniciem primeiro que o mesmo, assim pode acontecer que não consiga inicializar
-com sucesso. 
+com sucesso caso as tentativas cheguem no limite.
 
 ## Metadata
 
