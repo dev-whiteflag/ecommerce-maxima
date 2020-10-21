@@ -29,7 +29,7 @@ import java.util.UUID;
  * @author Brenno Fagundes
  */
 @RestController
-@RequestMapping(value = "/v1/clients", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/v1/orders", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class OrderResource {
 
     private final OrderService service;
