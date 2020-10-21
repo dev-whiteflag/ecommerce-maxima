@@ -7,10 +7,16 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatButtonModule} from '@angular/material/button';
+import {ClientDialogComponent} from './client.dialog.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
-    ClientComponent
+    ClientComponent,
+    ClientDialogComponent
   ],
   imports: [
     CommonModule,
@@ -18,9 +24,13 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatCardModule,
     MatIconModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [MatDialog],
   bootstrap: [ClientComponent]
 })
 export class ClientModule {

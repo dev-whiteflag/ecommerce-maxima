@@ -4,6 +4,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {ClientService} from '../services/client.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ClientDialogComponent} from './client.dialog.component';
 
 export interface Client {
   uuid: string;
@@ -28,7 +30,8 @@ export class ClientComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public service: ClientService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(public service: ClientService, iconRegistry: MatIconRegistry,
+              sanitizer: DomSanitizer, public dialog: MatDialog) {
     iconRegistry.addSvgIcon('client-maxima',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icone-cliente.svg')
     );
@@ -37,18 +40,26 @@ export class ClientComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.service.sync();
-    this.service.getAllClientsPaginated(this.paginator.pageIndex, this.paginator.pageSize)
-      .subscribe(next => {
-        this.dataSource.data = Object.values(next);
-      }, err => console.log(err));
+    this.getClientData();
   }
 
   ngOnInit(): void {
-    if (this.dataSource.data == null){
-      this.service.getAllClientsPaginated(this.paginator.pageIndex, this.paginator.pageSize)
-        .subscribe(next => {
-          this.dataSource.data = Object.values(next);
-        }, err => console.log(err));
-    }
+  }
+
+  newClient(): void {
+    this.dialog.open(ClientDialogComponent, {
+      width: '50%'
+    });
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.getClientData();
+    });
+  }
+
+  getClientData(): void {
+    this.service.getAllClientsPaginated(
+      this.dataSource.paginator.pageIndex, this.dataSource.paginator.pageSizeOptions[2])
+      .subscribe(next => {
+        this.dataSource.data = Object.values(next);
+      }, err => console.log(err));
   }
 }

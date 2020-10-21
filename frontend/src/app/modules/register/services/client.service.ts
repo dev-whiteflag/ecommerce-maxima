@@ -19,7 +19,14 @@ export class ClientService extends ApiService{
     return this.http.post(this.URI + '/', {
       pageNumber: page,
       pageSize: size
-    } , this.headers);
+    }, this.headers);
+  }
+
+  public createNewClient(nameInput, codeInput): Observable<object> {
+    return this.http.post(this.URI + '/new', {
+      name: nameInput,
+      code: codeInput
+    }, this.headers);
   }
 
 }

@@ -59,6 +59,8 @@ services:
                     - gateway.maximatech.com.br    
         expose:
             - "8080"
+        ports: 
+            - "8080:8080"
     maxima-api:
         image: maxima-api
         build: ./backend/api
@@ -89,6 +91,20 @@ services:
                     - tax.maximatech.com.br   
         expose:
             - "8082"
+    maxima-frontend:
+        image: maxima-frontend
+        build: ./frontend/
+        depends_on: 
+            - maxima-tax
+            - maxima-api
+        networks: 
+            maxima-network:
+                aliases: 
+                    - ecommerce.maximatech.com.br
+        expose: 
+            - "4200/tcp"
+        ports:
+            - "80:4200"
 
 networks:
     maxima-network:
