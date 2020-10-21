@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {ClientService} from '../services/client.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ClientDialogComponent} from './client.dialog.component';
+import {PaginatedDatasource} from '../../../shared/models/paginated.datasource.model';
+import {tap} from 'rxjs/operators';
 
 export interface Client {
   uuid: string;
@@ -24,9 +26,9 @@ const ELEMENT_DATA: Client[] = [
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.sass']
 })
-export class ClientComponent implements AfterViewInit, OnInit {
+export class ClientComponent implements AfterViewInit {
   displayedColumns: string[] = ['name', 'code'];
-  dataSource = new MatTableDataSource<Client>();
+  dataSource = new PaginatedDatasource<Client>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -38,12 +40,18 @@ export class ClientComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
     this.service.sync();
-    this.getClientData();
-  }
+    this.dataSource.loadData(
+      this.service.getAllClientsPaginated()
+    );
 
-  ngOnInit(): void {
+    this.dataSource.counter$.pipe(
+      tap((count) => {
+          this.paginator.length = count;
+        })).subscribe();
+
+    this.paginator.page.pipe(
+      tap(() => this.refreshData())).subscribe();
   }
 
   newClient(): void {
@@ -51,15 +59,13 @@ export class ClientComponent implements AfterViewInit, OnInit {
       width: '50%'
     });
     this.dialog.afterAllClosed.subscribe(() => {
-      this.getClientData();
+      this.refreshData();
     });
   }
 
-  getClientData(): void {
-    this.service.getAllClientsPaginated(
-      this.dataSource.paginator.pageIndex, this.dataSource.paginator.pageSizeOptions[2])
-      .subscribe(next => {
-        this.dataSource.data = Object.values(next);
-      }, err => console.log(err));
+  refreshData(): void {
+    this.dataSource.loadData(
+      this.service.getAllClientsPaginated(this.paginator.pageIndex, this.paginator.pageSize),
+    );
   }
 }

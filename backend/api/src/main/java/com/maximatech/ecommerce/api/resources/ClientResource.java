@@ -9,6 +9,9 @@ import com.maximatech.ecommerce.api.services.ClientService;
 import com.maximatech.ecommerce.api.services.MaximaService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Rest Controller (resource) for Clients, this controller includes Paginated Endpoints.
@@ -59,14 +63,15 @@ public class ClientResource {
         throw new EntityNotFoundException("Requested Client was not Found");
     }
 
+    // new pagination method
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<ClientDto> getAllUsers(@RequestBody Pageable body) {
+    public Page<ClientDto> getAllClients(@RequestBody Pageable body) {
         Preconditions.checkNotNull(body);
-        List<ClientDto> clientDtos = new ArrayList<>();
-        service.getAllPaginated(body).parallelStream()
-                .forEach(client -> clientDtos.add(mapper.toDto(client)));
-        return clientDtos;
+        PageRequest pageRequest = PageRequest.of(body.getPageNumber(), body.getPageSize());
+        Page<Client> pageResult = service.getAllPaginated(pageRequest);
+        List<ClientDto> clients = pageResult.stream().map(mapper::toDto).collect(Collectors.toList());
+        return new PageImpl<>(clients, pageRequest, pageResult.getTotalElements());
     }
 
     @PostMapping("/new")
