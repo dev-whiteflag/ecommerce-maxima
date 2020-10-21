@@ -4,11 +4,15 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  private isAuth: boolean;
 
   constructor(public auth: AuthService, public router: Router) {}
 
   async canActivate(): Promise<boolean> {
-    if (await this.auth.checkAuthenticated() === true) {
+    await this.auth.checkAuthenticated().subscribe(next => {
+      this.isAuth = next;
+    });
+    if (this.isAuth) {
       return true;
     } else {
       await this.router.navigate(['login']);

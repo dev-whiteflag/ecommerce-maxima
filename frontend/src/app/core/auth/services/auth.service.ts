@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
-  constructor() {}
+  constructor(private router: Router) {}
 
   public isAuthenticated = new BehaviorSubject<boolean>(false);
 
-  async checkAuthenticated(): Promise<boolean> {
-    const authenticated = Boolean(await localStorage.getItem('isAuthenticated'));
-    return authenticated === true;
+  checkAuthenticated(): Observable<boolean> {
+    const authenticated = Boolean(localStorage.getItem('isAuthenticated'));
+    this.isAuthenticated.next(authenticated);
+    return this.isAuthenticated.asObservable();
   }
 
   login(username: string, password: string): void {
@@ -20,5 +22,6 @@ export class AuthService {
     }
     this.isAuthenticated.next(true);
     localStorage.setItem('isAuthenticated', 'true');
+    this.router.navigate(['']);
   }
 }

@@ -9,8 +9,8 @@ import {AuthService} from '../../auth/services/auth.service';
 export class NavbarComponent {
   isAuthenticated: boolean;
   constructor(private auth: AuthService) {
-    this.auth.checkAuthenticated().then(value => {
-      this.isAuthenticated = value;
+    this.auth.checkAuthenticated().subscribe(next => {
+      this.isAuthenticated = next;
     });
   }
 }

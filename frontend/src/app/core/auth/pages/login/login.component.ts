@@ -19,6 +19,7 @@ export class LoginComponent {
     if (this.username.invalid === false && this.password.invalid === false){
       try {
         this.auth.login(this.username.value, this.password.value);
+        this.openSnackBar('Logado com sucesso!', 'Fechar');
       } catch (e) {
         this.openSnackBar(e, 'Fechar');
       }

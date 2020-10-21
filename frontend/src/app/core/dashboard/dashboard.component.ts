@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthService} from '../auth/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +6,6 @@ import {AuthService} from '../auth/services/auth.service';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent {
-  constructor(public auth: AuthService) {
+  constructor() {
   }
 }
