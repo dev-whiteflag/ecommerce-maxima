@@ -13,11 +13,11 @@ export class ClientDialogComponent {
               public snackBar: MatSnackBar, public service: ClientService) {}
 
   name = new FormControl('', [Validators.required]);
-  code = new FormControl('', [Validators.required]);
+  code = new FormControl('');
 
   createNewUser(): void {
     if (this.name.value !== undefined && this.code.value !== undefined){
-      this.service.createNewClient(this.name.value, this.code.value).subscribe(() => {
+      this.service.createNewClient(this.name.value, this.code.value).subscribe((next) => {
         this.openSnackBar('Cliente criado com sucesso!', 'Fechar');
         this.closeDialog();
       }, err => {

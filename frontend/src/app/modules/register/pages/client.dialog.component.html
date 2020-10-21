@@ -2,12 +2,12 @@
 <div mat-dialog-content fxLayout="column" fxLayoutAlign="">
   <mat-form-field appearance="outline">
     <mat-label>Nome</mat-label>
-    <input matInput placeholder="John Doe">
+    <input matInput placeholder="John Doe" [formControl]="name" required>
     <mat-hint>{{getHintMessage('name')}}</mat-hint>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Código</mat-label>
-    <input matInput placeholder="Placeholder">
+    <input matInput placeholder="Código ERP" [formControl]="code">
     <mat-hint>{{getHintMessage('code')}}</mat-hint>
   </mat-form-field>
 </div>

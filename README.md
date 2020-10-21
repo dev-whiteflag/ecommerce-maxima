@@ -17,7 +17,7 @@ As credenciais para acessar o frontend é `user` e `user`.
 
 ## Backend
 
-O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``. Os serviços utilizando Spring Boot ``2.3.4.RELEASE`` e Spring Cloud ``Hoxton.SR8``, rodando em OpenJDK 14 com source escrita em Java 11.
+O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``. Os serviços utilizando Spring Boot ``2.3.4.RELEASE`` e Spring Cloud ``Hoxton.SR8``, rodando em OpenJDK 14 com source escrita em Java 11. 
 
 ### Instruções
 
@@ -36,6 +36,11 @@ Cada um dos módulos do backend devem ser construidos individualmente utilizando
 ### Load Balancer
 
 Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com ``gateway`` (utilizando Zuul) agem como um load balancer, o ``discovery`` registra as novas instancias do serviço e o ``gateway`` redireciona para as instancias de acordco com o Zuul.
+
+### Avisos
+
+É possivel que um dos serviços que necessitam do `config` iniciem primeiro que o mesmo, assim pode acontecer que não consiga inicializar
+com sucesso. 
 
 ## Metadata
 

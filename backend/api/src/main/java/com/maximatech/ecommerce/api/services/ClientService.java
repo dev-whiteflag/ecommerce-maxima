@@ -1,6 +1,5 @@
 package com.maximatech.ecommerce.api.services;
 
-import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.entities.Client;
 import com.maximatech.ecommerce.api.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 /**
  * Client Service for Clients, this service is responsible for business logic
@@ -28,6 +28,11 @@ public class ClientService {
         return repository.findById(uuid);
     }
 
+    public boolean verifyIfExistsByName(String name) {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .anyMatch(client -> name.trim().equals(client.getName()));
+    }
+
     public Page<Client> getAllPaginated(PageRequest request) {
         return repository.findAll(request);
     }
@@ -37,7 +42,11 @@ public class ClientService {
     }
 
     public UUID save(Client data) {
+        if (verifyIfExistsByName(data.getName()))
+            throw new RuntimeException("Client already exists.");
         Client client = repository.save(data);
+        System.out.print(client.getName());
+        System.out.print(client.getCode());
         return client.getUuid();
     }
 

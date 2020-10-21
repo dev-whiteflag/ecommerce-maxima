@@ -26,10 +26,11 @@ import java.util.stream.Collectors;
 
 /**
  * Rest Controller (resource) for Clients, this controller includes Paginated Endpoints.
+ *
  * @author Brenno Fagundes
  */
 @RestController
-@RequestMapping(value = "/v1/clients", produces = { MediaType.APPLICATION_JSON_VALUE })
+@RequestMapping(value = "/v1/clients", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class ClientResource {
 
     private final ClientService service;
@@ -46,19 +47,22 @@ public class ClientResource {
     @ResponseStatus(HttpStatus.OK)
     public void syncWithMaxima() {
         /* ENHANCE: this will be called by frontend everytime 'Clients' screen is
-        *           opened, this is not the smartest way to sync them but will work for now.
-        *           Probably a Messaging Service like RabbitMQ and Kafka would do the job
-        *           nicely.
-        */
+         *           opened, this is not the smartest way to sync them but will work for now.
+         *           Probably a Messaging Service like RabbitMQ and Kafka would do the job
+         *           nicely.
+         */
 
         maxService.getAllClientsFromApi().parallelStream()
-                .forEach(client -> service.save(mapper.toEntity(client)));
+                .forEach(client -> {
+                    if (!service.verifyIfExistsByName(client.getNome()))
+                        service.save(mapper.toEntity(client));
+                });
     }
 
     @GetMapping("/{uuid}")
     public ClientDto findById(@PathVariable UUID uuid) {
         Optional<Client> optional = service.findById(uuid);
-        if(optional.isPresent())
+        if (optional.isPresent())
             return mapper.toDto(optional.get());
         throw new EntityNotFoundException("Requested Client was not Found");
     }
@@ -76,9 +80,11 @@ public class ClientResource {
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID createUser(@RequestBody ClientDto user){
-        Preconditions.checkNotNull(user);
-        return service.save(mapper.toEntity(user));
+    public UUID create(@RequestBody ClientDto client) {
+        Preconditions.checkNotNull(client);
+        System.out.print(client.getName());
+        System.out.print(client.getCode());
+        return service.save(mapper.toEntity(client));
     }
 
     @PutMapping(value = "/{uuid}")
@@ -86,7 +92,7 @@ public class ClientResource {
     public void update(@PathVariable UUID uuid, @RequestBody ClientDto resource) {
         Preconditions.checkNotNull(resource);
         Optional<Client> optional = service.findById(uuid);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             Client client = optional.get();
             client.setUpdatedAt(ZonedDateTime.now());
             service.update(client);
@@ -100,7 +106,7 @@ public class ClientResource {
     public void delete(@PathVariable UUID uuid) {
         Preconditions.checkNotNull(uuid);
         Optional<Client> optional = service.findById(uuid);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             service.delete(optional.get());
         } else {
             throw new EntityNotFoundException("Requested Client was not Found");
