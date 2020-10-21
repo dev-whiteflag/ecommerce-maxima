@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Novo Cliente</h1>
+<div mat-dialog-content fxLayout="column" fxLayoutAlign="">
+  <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="John Doe" [formControl]="name" required>
+    <mat-hint>{{getHintMessage('name')}}</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Código</mat-label>
+    <input matInput placeholder="Código ERP" [formControl]="code">
+    <mat-hint>{{getHintMessage('code')}}</mat-hint>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="accent" (click)="createNewUser()">Adicionar</button>
+  <button mat-button mat-dialog-close>Fechar</button>
+</div>

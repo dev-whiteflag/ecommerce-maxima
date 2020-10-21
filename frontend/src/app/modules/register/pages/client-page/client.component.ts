@@ -2,10 +2,10 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatPaginator} from '@angular/material/paginator';
-import {ClientService} from '../services/client.service';
+import {ClientService} from '../../services/client.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ClientDialogComponent} from './client.dialog.component';
-import {PaginatedDatasource} from '../../../shared/models/paginated.datasource.model';
+import {PaginatedDatasource} from '../../../../shared/models/paginated.datasource.model';
 import {tap} from 'rxjs/operators';
 
 export interface Client {
@@ -27,7 +27,7 @@ export class ClientComponent implements AfterViewInit {
 
   constructor(public service: ClientService, iconRegistry: MatIconRegistry,
               sanitizer: DomSanitizer, public dialog: MatDialog) {
-    iconRegistry.addSvgIcon('client-maxima',
+    iconRegistry.addSvgIcon('client-page-maxima',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icone-cliente.svg')
     );
   }

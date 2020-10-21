@@ -2,14 +2,14 @@ import {Component} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ClientService} from '../services/client.service';
+import {ClientService} from '../../services/client.service';
 
 @Component({
   selector: 'app-client-dialog',
-  templateUrl: 'client.dialog.component.html',
+  templateUrl: 'product.dialog.component.html',
 })
-export class ClientDialogComponent {
-  constructor(public dialogRef: MatDialogRef<ClientDialogComponent>,
+export class ProductDialogComponent {
+  constructor(public dialogRef: MatDialogRef<ProductDialogComponent>,
               public snackBar: MatSnackBar, public service: ClientService) {}
 
   name = new FormControl('', [Validators.required]);
