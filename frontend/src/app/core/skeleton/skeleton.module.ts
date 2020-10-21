@@ -8,21 +8,23 @@ import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
     SkeletonComponent,
     NavbarComponent
   ],
-  imports: [
-    CommonModule,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatBadgeModule,
-    MatMenuModule
-  ],
+    imports: [
+        CommonModule,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatBadgeModule,
+        MatMenuModule,
+        RouterModule
+    ],
   providers: [],
   exports: [
     SkeletonComponent

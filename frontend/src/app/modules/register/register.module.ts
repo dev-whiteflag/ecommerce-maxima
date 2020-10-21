@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ClientModule} from './pages/client.module';
+import {ClientService} from './services/client.service';
 
 @NgModule({
   declarations: [],
@@ -8,7 +9,7 @@ import {ClientModule} from './pages/client.module';
     CommonModule,
     ClientModule
   ],
-  providers: [],
+  providers: [ClientService],
   bootstrap: []
 })
 export class RegisterModule {

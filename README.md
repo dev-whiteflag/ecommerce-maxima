@@ -5,13 +5,25 @@
 
 ## Introdução
 
+993044260
 
+### Autenticação
+
+A autenticação foi "mocada" em ambas as partes do sistema, as unicas que permaneceram foram entre os serviços de backend. Por exemplo, comunicação entre o `config` e o `discovery`. 
 
 ## Frontend
+
+As credenciais para acessar o frontend é `user` e `user`.
 
 ## Backend
 
 O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``. Os serviços utilizando Spring Boot ``2.3.4.RELEASE`` e Spring Cloud ``Hoxton.SR8``, rodando em OpenJDK 14 com source escrita em Java 11.
+
+### Instruções
+
+Cada um dos módulos do backend devem ser construidos individualmente utilizando `mvnw clean package -DskipTests`, após isso, é só executar o `docker-compose` através das instruções na introdução. É preciso skipar `context-load` testes em alguns modulos pois necessitam do `config` e o `discovery` estar sendo executado.
+
+// TODO: colocar `spring.cloud.config.fail-fast=false` para os testes ignorarem a falta do `config`.
 
 ### ``config``
 
