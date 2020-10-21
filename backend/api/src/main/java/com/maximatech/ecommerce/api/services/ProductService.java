@@ -1,11 +1,10 @@
 package com.maximatech.ecommerce.api.services;
 
-import com.maximatech.ecommerce.api.models.entities.Client;
+import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.entities.Product;
-import com.maximatech.ecommerce.api.repositories.ClientRepository;
 import com.maximatech.ecommerce.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,7 +30,9 @@ public class ProductService {
     }
 
     public List<Product> getAllPaginated(Pageable pageable) {
-        return repository.findAll(pageable).toList();
+        org.springframework.data.domain.Pageable converted
+                = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        return repository.findAll(converted).toList();
     }
 
     public void update(Product data) {

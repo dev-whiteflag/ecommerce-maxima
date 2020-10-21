@@ -1,18 +1,14 @@
 package com.maximatech.ecommerce.api.resources;
 
 import com.google.common.base.Preconditions;
-import com.maximatech.ecommerce.api.mappers.ClientMapper;
 import com.maximatech.ecommerce.api.mappers.ProductMapper;
-import com.maximatech.ecommerce.api.models.dto.ClientDto;
+import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.dto.ProductDto;
-import com.maximatech.ecommerce.api.models.entities.Client;
 import com.maximatech.ecommerce.api.models.entities.Product;
-import com.maximatech.ecommerce.api.services.ClientService;
 import com.maximatech.ecommerce.api.services.MaximaService;
 import com.maximatech.ecommerce.api.services.ProductService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

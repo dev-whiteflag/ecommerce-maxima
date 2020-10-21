@@ -24,12 +24,12 @@ public class MaximaService {
     private String url;
 
     public MaximaService() {
-        this.client = WebClient.create(url);
+        this.client = WebClient.create();
     }
 
     public List<ClientMaxima> getAllClientsFromApi() {
         WebClient.ResponseSpec response =
-                client.get().uri("/cliente")
+                client.get().uri(url + "/cliente")
                         .headers(httpHeaders -> httpHeaders.add("Content-Type", "application/json"))
                         .retrieve();
         ClientMaxima[] result = response.bodyToMono(ClientMaxima[].class).block();
@@ -39,7 +39,7 @@ public class MaximaService {
 
     public List<ProductMaxima> getAllProductsFromApi() {
         WebClient.ResponseSpec response =
-                client.get().uri("/produto")
+                client.get().uri(url + "/produto")
                         .headers(httpHeaders -> httpHeaders.add("Content-Type", "application/json"))
                         .retrieve();
         ProductMaxima[] result = response.bodyToMono(ProductMaxima[].class).block();

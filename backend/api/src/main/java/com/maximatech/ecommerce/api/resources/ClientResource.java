@@ -3,12 +3,12 @@ package com.maximatech.ecommerce.api.resources;
 import com.google.common.base.Preconditions;
 import com.maximatech.ecommerce.api.mappers.ClientMapper;
 import com.maximatech.ecommerce.api.models.dto.ClientDto;
+import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.entities.Client;
 import com.maximatech.ecommerce.api.services.ClientService;
 import com.maximatech.ecommerce.api.services.MaximaService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +39,7 @@ public class ClientResource {
     }
 
     @GetMapping("/sync")
+    @ResponseStatus(HttpStatus.OK)
     public void syncWithMaxima() {
         /* ENHANCE: this will be called by frontend everytime 'Clients' screen is
         *           opened, this is not the smartest way to sync them but will work for now.
