@@ -20,14 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}user").roles("USER")
-                .and()
-                .withUser("admin").password("{noop}admin").roles("ADMIN");
+        auth.inMemoryAuthentication();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and().authorizeRequests().anyRequest().authenticated().and().csrf().disable();
+        http.httpBasic().and().authorizeRequests().anyRequest().permitAll().and().csrf().disable();
     }
 }
