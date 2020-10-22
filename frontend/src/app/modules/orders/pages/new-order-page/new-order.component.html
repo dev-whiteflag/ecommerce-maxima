@@ -1,0 +1,31 @@
+<section class="page" fxLayout="column">
+  <h1><b>Novo Pedido</b></h1>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="card-mat-title">
+          <mat-icon svgIcon="client-maxima"></mat-icon>
+          <b> Cliente</b>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        <mat-form-field appearance="outline">
+          <mat-label>Cliente</mat-label>
+          <input type="text"
+                 placeholder="Selecione um Cliente"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="autoComplete"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</section>

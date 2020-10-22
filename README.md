@@ -9,6 +9,11 @@
 
 A autenticação foi "mocada" em ambas as partes do sistema, as unicas que permaneceram foram entre os serviços de backend. Por exemplo, comunicação entre o `config` e o `discovery`. 
 
+### Considerações
+
+A tela de novo pedido não foi finalizada, pois está faltando endpoints de `autocomplete` no backend. Para uma quantidade gigante de clientes,
+o filtro tem que ser feito server-side. Do mesmo jeito que a Paginação está sendo feita server-side.
+
 ## Frontend
 
 O Frontend é feito em Angular `10`, utilizando Material Angular. O App comunica com o backend através do Gateway. As credenciais para acessar o frontend é `user` e `user`.
@@ -17,9 +22,12 @@ O Frontend é feito em Angular `10`, utilizando Material Angular. O App comunica
 
 O Backend consiste de vários modulos, eles são: ``config, discovery, gateway, api, tax``. Os serviços utilizando Spring Boot ``2.3.4.RELEASE`` e Spring Cloud ``Hoxton.SR8``, rodando em OpenJDK 14 com source escrita em Java 11. 
 
+Há um `parent-pom` na pasta backend, ele serve para poder rapidamente `clean package` em todos os modulos.
+
 ### Instruções
 
-Cada um dos módulos do backend devem ser construidos individualmente utilizando `mvnw clean package -DskipTests`, após isso, é só executar o `docker-compose` através das instruções na introdução. É preciso skipar `context-load` testes em alguns modulos pois necessitam do `config` e o `discovery` estar sendo executado.
+Cada um dos módulos do backend devem ser construidos individualmente utilizando `mvnw clean package -DskipTests`, (ou via o `parent-pom`)
+após isso, é só executar o `docker-compose` através das instruções na introdução. É preciso skipar `context-load` testes em alguns modulos pois necessitam do `config` e o `discovery` estar sendo executado.
 
 // TODO: colocar `spring.cloud.config.fail-fast=false` para os testes ignorarem a falta do `config`.
 
@@ -37,7 +45,7 @@ Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com 
 
 ### API Gateway
 
-O `gateway` tem uma misconfiguration que causa a primeira requisição do sistema cair em `gateway timeout`.
+O `gateway` tem uma misconfiguration que causa a primeira requisição do sistema cair em `gateway timeout`. Caso isso aconteça, um refresh no frontend ou uma requisição nova no endpoint irá trazer os dados que precisamos.
 
 ### Considerações
 
