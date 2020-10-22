@@ -4,10 +4,16 @@ import com.google.common.base.Preconditions;
 import com.maximatech.ecommerce.api.mappers.OrderMapper;
 import com.maximatech.ecommerce.api.models.dto.OrderDto;
 import com.maximatech.ecommerce.api.models.dto.Pageable;
+import com.maximatech.ecommerce.api.models.dto.ProductDto;
+import com.maximatech.ecommerce.api.models.entities.Client;
 import com.maximatech.ecommerce.api.models.entities.Order;
+import com.maximatech.ecommerce.api.models.entities.Product;
 import com.maximatech.ecommerce.api.services.OrderService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Rest Controller (resource) for Orders, this controller includes Paginated Endpoints.
@@ -45,22 +52,25 @@ public class OrderResource {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderDto> getAllOrders(@RequestBody Pageable body) {
+    public Page<OrderDto> getAllClients(@RequestBody Pageable body) {
         Preconditions.checkNotNull(body);
-        List<OrderDto> orderDtos = new ArrayList<>();
-        service.getAllPaginated(body).parallelStream()
-                .forEach(order -> orderDtos.add(mapper.toDto(order)));
-        return orderDtos;
+        PageRequest pageRequest = PageRequest.of(body.getPageNumber(), body.getPageSize());
+        Page<Order> pageResult = service.getAllPaginated(pageRequest);
+        List<OrderDto> clients = pageResult.stream().map(mapper::toDto).collect(Collectors.toList());
+        return new PageImpl<>(clients, pageRequest, pageResult.getTotalElements());
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public UUID createOrder(@RequestBody OrderDto order){
         Preconditions.checkNotNull(order);
-        return service.save(mapper.toEntity(order));
+        Order entity = mapper.toEntity(order);
+        entity.setCreatedAt(ZonedDateTime.now());
+        entity.setUpdatedAt(ZonedDateTime.now());
+        return service.save(entity);
     }
 
-    @PutMapping(value = "/{uuid}")
+    @GetMapping(value = "/update/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable UUID uuid, @RequestBody OrderDto resource) {
         Preconditions.checkNotNull(resource);
@@ -74,7 +84,7 @@ public class OrderResource {
         }
     }
 
-    @DeleteMapping(value = "/{uuid}")
+    @GetMapping(value = "/delete/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable UUID uuid) {
         Preconditions.checkNotNull(uuid);

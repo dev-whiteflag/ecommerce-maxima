@@ -7,6 +7,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {ClientDialogComponent} from './client.dialog.component';
 import {PaginatedDatasource} from '../../../../shared/models/paginated.datasource.model';
 import {tap} from 'rxjs/operators';
+import {ConfirmDialogComponent} from '../../../../shared/components/confirmation-dialog/confirm.dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface Client {
   uuid: string;
@@ -20,14 +22,14 @@ export interface Client {
   styleUrls: ['./client.component.sass']
 })
 export class ClientComponent implements AfterViewInit {
-  displayedColumns: string[] = ['name', 'code'];
+  displayedColumns: string[] = ['name', 'code', 'actions'];
   dataSource = new PaginatedDatasource<Client>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public service: ClientService, iconRegistry: MatIconRegistry,
-              sanitizer: DomSanitizer, public dialog: MatDialog) {
-    iconRegistry.addSvgIcon('client-page-maxima',
+              sanitizer: DomSanitizer, public dialog: MatDialog, public snackBar: MatSnackBar) {
+    iconRegistry.addSvgIcon('client-maxima',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icone-cliente.svg')
     );
   }
@@ -60,5 +62,24 @@ export class ClientComponent implements AfterViewInit {
     this.dataSource.loadData(
       this.service.getAllClientsPaginated(this.paginator.pageIndex, this.paginator.pageSize),
     );
+  }
+
+  deleteClient(uuid): void {
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '30%'
+    }).afterClosed().subscribe(next => {
+      if (next === true){
+        this.service.deleteClient(uuid).subscribe(() => {
+          this.openSnackBar('Usuário deletado com sucesso!', 'Fechar');
+        });
+      }
+    }, err => this.openSnackBar(err, 'Fechar'));
+    console.log(uuid);
+  }
+
+  openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 }

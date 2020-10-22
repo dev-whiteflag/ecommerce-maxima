@@ -11,6 +11,7 @@ import {SkeletonModule} from './core/skeleton/skeleton.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RegisterModule} from './modules/register/register.module';
+import {SharedComponentsModule} from './shared/components/shared.components.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {RegisterModule} from './modules/register/register.module';
     AppRoutingModule,
     CoreModule,
     SkeletonModule,
-    RegisterModule
+    RegisterModule,
+    SharedComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

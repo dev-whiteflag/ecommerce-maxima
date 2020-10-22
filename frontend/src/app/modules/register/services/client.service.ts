@@ -11,7 +11,7 @@ export class ClientService extends ApiService{
 
   public sync(): void {
     this.http.get(this.URI + '/sync', this.headers)
-      .subscribe(next => console.log('clients synced' + next), err => console.log(err));
+      .subscribe(() => console.log('clients synced'), err => console.log(err));
   }
 
   public getAllClientsPaginated(page = 0, size = 5): Observable<object> {
@@ -26,6 +26,10 @@ export class ClientService extends ApiService{
       name: nameInput,
       code: codeInput
     }, this.headers);
+  }
+
+  public deleteClient(uuid): Observable<object> {
+    return this.http.delete(this.URI + '/' + uuid, this.headers);
   }
 
 }

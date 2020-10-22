@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Tem certeza?</h1>
+<div mat-dialog-content>
+  Essa ação não podera ser desfeita, clique em Sim somente se tiver certeza.
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="closeDialog(true)">Sim</button>
+  <button mat-button (click)="closeDialog(false)">Não</button>
+</div>

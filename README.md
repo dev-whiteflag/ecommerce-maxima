@@ -39,7 +39,7 @@ Sobre um Load Balancer, a combinação do ``discovery`` (utilizando Eureka) com 
 
 O `gateway` tem uma misconfiguration que causa a primeira requisição do sistema cair em `gateway timeout`.
 
-### Avisos
+### Considerações
 
 É possivel que um dos serviços que necessitam do `config` iniciem primeiro que o mesmo, assim pode acontecer que não consiga inicializar
 com sucesso caso as tentativas cheguem no limite.

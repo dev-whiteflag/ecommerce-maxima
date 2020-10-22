@@ -2,13 +2,18 @@ package com.maximatech.ecommerce.api.resources;
 
 import com.google.common.base.Preconditions;
 import com.maximatech.ecommerce.api.mappers.ProductMapper;
+import com.maximatech.ecommerce.api.models.dto.ClientDto;
 import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.dto.ProductDto;
+import com.maximatech.ecommerce.api.models.entities.Client;
 import com.maximatech.ecommerce.api.models.entities.Product;
 import com.maximatech.ecommerce.api.services.MaximaService;
 import com.maximatech.ecommerce.api.services.ProductService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Rest Controller (resource) for Products, this controller includes Paginated Endpoints.
@@ -48,7 +54,10 @@ public class ProductResource {
         */
 
         maxService.getAllProductsFromApi().parallelStream()
-                .forEach(product -> service.save(mapper.toEntity(product)));
+                .forEach(product -> {
+                    if (!service.verifyIfExistsByCode(product.getCodigo()))
+                        service.save(mapper.toEntity(product));
+                });
     }
 
     @GetMapping("/{uuid}")
@@ -61,12 +70,12 @@ public class ProductResource {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductDto> getAllProducts(@RequestBody Pageable body) {
+    public Page<ProductDto> getAllClients(@RequestBody Pageable body) {
         Preconditions.checkNotNull(body);
-        List<ProductDto> productDtos = new ArrayList<>();
-        service.getAllPaginated(body).parallelStream()
-                .forEach(product -> productDtos.add(mapper.toDto(product)));
-        return productDtos;
+        PageRequest pageRequest = PageRequest.of(body.getPageNumber(), body.getPageSize());
+        Page<Product> pageResult = service.getAllPaginated(pageRequest);
+        List<ProductDto> clients = pageResult.stream().map(mapper::toDto).collect(Collectors.toList());
+        return new PageImpl<>(clients, pageRequest, pageResult.getTotalElements());
     }
 
     @PostMapping("/new")
@@ -79,7 +88,7 @@ public class ProductResource {
         return service.save(entity);
     }
 
-    @PutMapping(value = "/{uuid}")
+    @GetMapping(value = "/update/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable UUID uuid, @RequestBody ProductDto resource) {
         Preconditions.checkNotNull(resource);
@@ -93,7 +102,7 @@ public class ProductResource {
         }
     }
 
-    @DeleteMapping(value = "/{uuid}")
+    @GetMapping(value = "/delete/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable UUID uuid) {
         Preconditions.checkNotNull(uuid);

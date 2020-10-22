@@ -5,6 +5,7 @@ import com.maximatech.ecommerce.api.mappers.ClientMapper;
 import com.maximatech.ecommerce.api.models.dto.ClientDto;
 import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.entities.Client;
+import com.maximatech.ecommerce.api.models.entities.Product;
 import com.maximatech.ecommerce.api.services.ClientService;
 import com.maximatech.ecommerce.api.services.MaximaService;
 import org.mapstruct.factory.Mappers;
@@ -82,12 +83,13 @@ public class ClientResource {
     @ResponseStatus(HttpStatus.CREATED)
     public UUID create(@RequestBody ClientDto client) {
         Preconditions.checkNotNull(client);
-        System.out.print(client.getName());
-        System.out.print(client.getCode());
-        return service.save(mapper.toEntity(client));
+        Client entity = mapper.toEntity(client);
+        entity.setCreatedAt(ZonedDateTime.now());
+        entity.setUpdatedAt(ZonedDateTime.now());
+        return service.save(entity);
     }
 
-    @PutMapping(value = "/{uuid}")
+    @GetMapping(value = "/update/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable UUID uuid, @RequestBody ClientDto resource) {
         Preconditions.checkNotNull(resource);
@@ -101,7 +103,7 @@ public class ClientResource {
         }
     }
 
-    @DeleteMapping(value = "/{uuid}")
+    @GetMapping(value = "/delete/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable UUID uuid) {
         Preconditions.checkNotNull(uuid);

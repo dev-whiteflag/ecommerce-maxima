@@ -45,8 +45,6 @@ public class ClientService {
         if (verifyIfExistsByName(data.getName()))
             throw new RuntimeException("Client already exists.");
         Client client = repository.save(data);
-        System.out.print(client.getName());
-        System.out.print(client.getCode());
         return client.getUuid();
     }
 

@@ -4,6 +4,7 @@ import com.maximatech.ecommerce.api.models.dto.Pageable;
 import com.maximatech.ecommerce.api.models.entities.Order;
 import com.maximatech.ecommerce.api.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
@@ -29,10 +30,8 @@ public class OrderService {
         return repository.findById(uuid);
     }
 
-    public List<Order> getAllPaginated(Pageable pageable) {
-        org.springframework.data.domain.Pageable converted
-                = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-        return repository.findAll(converted).toList();
+    public Page<Order> getAllPaginated(PageRequest request) {
+        return repository.findAll(request);
     }
 
     public void update(Order data){
