@@ -29,7 +29,7 @@ export class ClientService extends ApiService{
   }
 
   public deleteClient(uuid): Observable<object> {
-    return this.http.delete(this.URI + '/' + uuid, this.headers);
+    return this.http.get(this.URI + '/delete/' + uuid, this.headers);
   }
 
 }

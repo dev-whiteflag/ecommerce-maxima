@@ -71,6 +71,7 @@ export class ClientComponent implements AfterViewInit {
       if (next === true){
         this.service.deleteClient(uuid).subscribe(() => {
           this.openSnackBar('Usuário deletado com sucesso!', 'Fechar');
+          this.refreshData();
         });
       }
     }, err => this.openSnackBar(err, 'Fechar'));
