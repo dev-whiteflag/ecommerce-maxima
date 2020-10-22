@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {RegisterModule} from './modules/register/register.module';
 import {SharedComponentsModule} from './shared/components/shared.components.module';
+import {OrdersModule} from './modules/orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {SharedComponentsModule} from './shared/components/shared.components.modu
     CoreModule,
     SkeletonModule,
     RegisterModule,
+    OrdersModule,
     SharedComponentsModule
   ],
   providers: [],

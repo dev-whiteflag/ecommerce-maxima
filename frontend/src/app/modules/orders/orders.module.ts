@@ -1,12 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {OrdersService} from './services/orders.service';
+import {TaxService} from './services/tax.service';
+import {OrderModule} from './pages/order-page/order.module';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    OrderModule
   ],
-  providers: [],
+  providers: [OrdersService, TaxService],
   bootstrap: []
 })
 export class OrdersModule {
